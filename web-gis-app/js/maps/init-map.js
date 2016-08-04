@@ -11,15 +11,20 @@ var mapbox = 'https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/256/{z}/{
 
 var sources = [osm,mapbox];
 
-var osmLayer = L.tileLayer(sources[0]);
-var mapboxLayer = L.tileLayer(sources[1]);
+// var osmLayer = L.tileLayer(sources[0]);
+// var mapboxLayer = L.tileLayer(sources[1]).addTo(map);
 
+/**
 var map = L.map('mapid',{
   center: views[1],
-  zoom:12,
+  zoom:10,
   zoomControl: true,
   layers: [mapboxLayer]
 });
+**/
+
+var map = L.map('mapid').setView([-6.178520, 106.827207], 10);
+var mapboxLayer = L.tileLayer(sources[1]).addTo(map);
 
 /**
 var layerOptions = {
@@ -54,20 +59,14 @@ var cities = [
   }
 ];
 
-
-var jakarta = L.marker(cities[0].coordinates).addTo(map)
-            .bindPopup('Hallo')
-            .openPopup();
+// var markers = []
 
 /**
-var markers = []
-
 for (var i = 0; i<cities.length; ++i) {
-  var marker = L.marker(cities[i].coordinates);
-  markers.push(marker);
+  var marker = L.marker(cities[i].coordinates).addTo(map)
+              .bindPopup('Welcome to ' + cities[i].name + '<br>' + 'Population: ' + cities[i].population);
 }
 **/
-
 
 
 /**
@@ -75,22 +74,9 @@ L.control.layers(baseMaps,{"Jakarta": jakarta.bindPopup('Hallo') },layerOptions)
 L.control.scale(scaleOptions).addTo(map);
 **/
 
+var kacrut = L.marker([-6.208650322630214, 106.74882888793945]).addTo(map)
+              .bindPopup('TEST');
 
-// jakarta.bindPopup('Hallo').openPopup();
-
-// var depok = L.marker(cities[1].coordinates).bindPopup(cities[1].name);
-
-// var twoCities = L.layerGroup([jakarta,depok]);
-
-// .bindPopup('Welcome to ' + cities[i].name + '<br>' + 'Population: ' + cities[i].population)
-
-/**
-var detailCities = L.layerGroup(markers);
-
-var cityMaps = {
-  "Cities": detailCities
-};
-**/
 
 
 // 'Welcome to ' + cities[i].name + '<br>' + 'Population: ' + cities[i].population
