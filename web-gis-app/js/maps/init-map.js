@@ -17,18 +17,29 @@ var mapboxLayer = L.tileLayer(sources[1]);
 var map = L.map('mapid',{
   center: views[1],
   zoom:12,
-  zoomControl: true
+  zoomControl: true,
+  layers: [mapboxLayer]
 });
+
+/**
+var layerOptions = {
+  position: 'bottomright',
+  collapsed: true
+};
 
 var baseMaps = {
   "OSM":osmLayer,
   "MapBox": mapboxLayer
 };
 
-L.control.layers(baseMaps).addTo(map);
+var scaleOptions = {
+  position:'bottomleft',
+  metric:true
+};
+
+**/
 
 
-/**
 // creating marker on the map
 var cities = [
   {
@@ -41,14 +52,51 @@ var cities = [
     population: 1752000,
     coordinates: [-6.367967, 106.829559]
   }
-]
+];
 
+
+var jakarta = L.marker(cities[0].coordinates).addTo(map)
+            .bindPopup('Hallo')
+            .openPopup();
+
+/**
+var markers = []
 
 for (var i = 0; i<cities.length; ++i) {
-  var marker = L.marker(cities[i].coordinates, {draggable:false}).addTo(map);
-  marker.bindPopup('Welcome to ' + cities[i].name + '<br>' + 'Population: ' + cities[i].population);
+  var marker = L.marker(cities[i].coordinates);
+  markers.push(marker);
 }
+**/
 
+
+
+/**
+L.control.layers(baseMaps,{"Jakarta": jakarta.bindPopup('Hallo') },layerOptions).addTo(map);
+L.control.scale(scaleOptions).addTo(map);
+**/
+
+
+// jakarta.bindPopup('Hallo').openPopup();
+
+// var depok = L.marker(cities[1].coordinates).bindPopup(cities[1].name);
+
+// var twoCities = L.layerGroup([jakarta,depok]);
+
+// .bindPopup('Welcome to ' + cities[i].name + '<br>' + 'Population: ' + cities[i].population)
+
+/**
+var detailCities = L.layerGroup(markers);
+
+var cityMaps = {
+  "Cities": detailCities
+};
+**/
+
+
+// 'Welcome to ' + cities[i].name + '<br>' + 'Population: ' + cities[i].population
+
+
+/**
 // creating clickable popup
 var popup = L.popup();
 function onMapClick(e){
@@ -59,5 +107,4 @@ function onMapClick(e){
 }
 
 map.on('click', onMapClick);
-
 **/
