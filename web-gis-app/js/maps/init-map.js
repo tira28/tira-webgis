@@ -14,7 +14,7 @@ var mapbox = 'https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/256/{z}/{
 var sources = [osm,mapbox];
 
 var osmLayer = L.tileLayer(sources[0]);
-var mapboxLayet = L.tileLayer(sources[1]);  
+var mapboxLayer = L.tileLayer(sources[1]);
 
 L.tileLayer(sources[0]).addTo(map);
 
