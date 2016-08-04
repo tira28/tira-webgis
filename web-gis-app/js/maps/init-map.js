@@ -6,18 +6,29 @@ var jakartaView = [-6.178520, 106.827207];
 
 views.push(indonesiaView, jakartaView);
 
-var map = L.map('mapid').setView(views[1], 10);
-
 var osm = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 var mapbox = 'https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidGlyYTI4IiwiYSI6ImNpcmM0bWhhZTAwNnNpa25ub3hkbWI2bnAifQ.m6nEUKku6DmUSTljCgNJ4g';
 
 var sources = [osm,mapbox];
 
 var osmLayer = L.tileLayer(sources[0]);
-var mapboxLayet = L.tileLayer(sources[1]);  
+var mapboxLayer = L.tileLayer(sources[1]);
 
-L.tileLayer(sources[0]).addTo(map);
+var map = L.map('mapid',{
+  center: views[1],
+  zoom:12,
+  zoomControl: true
+});
 
+var baseMaps = {
+  "OSM":osmLayer,
+  "MapBox": mapboxLayer
+};
+
+L.control.layers(baseMaps).addTo(map);
+
+
+/**
 // creating marker on the map
 var cities = [
   {
@@ -48,3 +59,5 @@ function onMapClick(e){
 }
 
 map.on('click', onMapClick);
+
+**/
