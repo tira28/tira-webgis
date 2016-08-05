@@ -35,17 +35,37 @@ var cities = [
   }
 ];
 
-for (var i = 0; i<cities.length; ++i) {
-  var marker = L.marker(cities[i].coordinates, {draggable:false}).addTo(map);
-  marker.bindPopup('Welcome to ' + cities[i].name + '<br>' + 'Population: ' + cities[i].population);
+var markers = [];
+// var popupMessage = 'Welcome to ' + cities[i].name + '<br>' + 'Population: ' + cities[i].population;
+
+for (var i = 0; i<cities.length; ++i){
+  var marker = L.marker(cities[i].coordinates).bindPopup('Welcome to ' + cities[i].name + '<br>' + 'Population: ' + cities[i].population);
+  markers.push(marker);
 }
+
+var cityIcons = L.layerGroup(markers);
 
 var baseMaps = {
   "OSM" : osmLayer,
   "MapBox": mapboxLayer
 };
 
-var controller = L.control.layers(baseMaps).addTo(map);
+var overlayMaps = {
+  "Cities": cityIcons
+}
+
+
+
+var mapLayer  = L.control.layers(baseMaps, overlayMaps);
+var mapScale = L.control.scale({
+  metric: true
+});
+
+let mapComponent = [mapLayer, mapScale];
+
+for (let component of mapComponent) {
+  component.addTo(map);
+}
 
 
 
