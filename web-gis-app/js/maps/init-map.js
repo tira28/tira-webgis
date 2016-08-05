@@ -45,28 +45,43 @@ for (var i = 0; i<cities.length; ++i){
 
 var cityIcons = L.layerGroup(markers);
 
+var geojsonFeature = {
+  "type": "Feature",
+  "properties": {
+    "name": "Bekasi",
+    "population": 2663011
+  },
+  "geometry": {
+    "type": "Point",
+    "coordinates": [106.99516, -6.24118]
+  }
+};
+
+var geojsonLayer = L.geoJson(geojsonFeature).bindPopup('Welcome to ' + geojsonFeature.properties.name + '<br>' + 'Population: ' + geojsonFeature.properties.population);
+
 var baseMaps = {
   "OSM" : osmLayer,
   "MapBox": mapboxLayer
 };
 
 var overlayMaps = {
-  "Cities": cityIcons
+  "Cities": cityIcons,
+  "Geojson": geojsonLayer
 }
-
-
 
 var mapLayer  = L.control.layers(baseMaps, overlayMaps);
 var mapScale = L.control.scale({
   metric: true
 });
 
-let mapComponent = [mapLayer, mapScale];
+
+
+
+let mapComponent = [mapLayer, mapScale, geojsonLayer];
 
 for (let component of mapComponent) {
   component.addTo(map);
 }
-
 
 
 // creating clickable popup
